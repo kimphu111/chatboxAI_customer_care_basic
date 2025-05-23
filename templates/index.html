@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chatbot chăm sóc khách hàng</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    max-width: 700px;
+  }
+  #chatbox {
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 700px;
+    overflow-y: auto;
+    background: #f9f9f9;
+  }
+  .user-message {
+    text-align: right;
+    margin: 8px 0;
+  }
+  .bot-message {
+    text-align: left;
+    margin: 8px 0;
+    background: #e1f0ff;
+    padding: 5px 10px;
+    border-radius: 8px;
+    max-width: 90%;
+  }
+  input[type="text"] {
+    width: 80%;
+    padding: 10px;
+  }
+  button {
+    width: 18%;
+    padding: 10px;
+  }
+</style>
+</head>
+<body>
+  <h2>Chatbot chăm sóc khách hàng</h2>
+  <div id="chatbox"></div>
+  <input id="userInput" type="text" placeholder="Nhập tin nhắn..." />
+  <button onclick="sendMessage()">Gửi</button>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value.trim();
+      if (!message) return;
+
+      // Hiển thị tin nhắn user
+      const chatbox = document.getElementById('chatbox');
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.className = 'user-message';
+      userMsgDiv.textContent = message;
+      chatbox.appendChild(userMsgDiv);
+
+      // Clear input
+      input.value = '';
+      chatbox.scrollTop = chatbox.scrollHeight;
+
+      // Gửi message lên server
+      fetch('/get?msg=' + encodeURIComponent(message))
+        .then(response => response.text())
+        .then(data => {
+          // Hiển thị tin nhắn bot có thể là HTML
+          const botMsgDiv = document.createElement('div');
+          botMsgDiv.className = 'bot-message';
+          botMsgDiv.innerHTML = data;
+          chatbox.appendChild(botMsgDiv);
+          chatbox.scrollTop = chatbox.scrollHeight;
+        });
+    }
+
+    // Bắt sự kiện Enter gửi luôn
+    document.getElementById('userInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>

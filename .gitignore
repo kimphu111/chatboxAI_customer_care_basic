@@ -1,0 +1,23 @@
+# Môi trường ảo
+venv/
+ENV/
+env/
+.venv/
+
+# File hệ thống
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.db
+*.log
+
+# VSCode hoặc IDE
+.vscode/
+.idea/
+
+# Static build tạm (nếu có dùng build tools)
+build/
+dist/
+
+# File môi trường (nếu dùng dotenv)
+.env
