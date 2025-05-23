@@ -1,4 +1,5 @@
-step1: git clone https://github.com/kimphu111/chatboxAI_customer_care_basic.git
+
+step1 (mở terminal ở file explorer): git clone https://github.com/kimphu111/chatboxAI_customer_care_basic.git
 
 step2: open in vs code
 step3: open terminal
